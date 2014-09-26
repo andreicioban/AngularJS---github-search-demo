@@ -1,0 +1,11 @@
+{
+    "name": "AngularJS---github-search-demo",
+    "description": "Angular demo app - search repos on github",
+    "author": "Andrei Cioban",
+    "version": "0.1.0",
+    "devDependencies": {
+        "grunt": "~0.4.4",
+        "grunt-contrib-uglify": "latest",
+        "grunt-contrib-watch": "latest"
+    }
+}

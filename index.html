@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Github Angular</title>
+
+    <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" media="screen" href="css/style.css" />
+
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.20/angular.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.20/angular-resource.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.20/angular-route.min.js"></script>
+
+</head>
+<body ng-app="githubApp">
+    <div class="container wrapper" ng-controller="MainCtrl">
+        <div class="row">
+            <div class="col-sm-12 col-md-12">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xs-8 col-xs-offset-2">
+                            <div class="input-group">
+                                <select ng-model="searchCategory" class="form-control"
+                                        ng-options="cat.name as cat.name for cat in categories">
+                                </select>
+                                <input type="text" class="form-control" name="search-git"
+                                       ng-model="searchTerm" placeholder="Search term..."
+                                        on-enter="doSearch()">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default" type="button" ng-click="doSearch()">
+                                        <span class="glyphicon glyphicon-search"></span>
+                                    </button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-6 text-center project"
+                     ng-repeat="result in results | offset: pconfig.currentPage*pconfig.itemsPerPage | limitTo: pconfig.itemsPerPage">
+                    <div class="panel panel-info clearfix">
+                        <div class="panel-heading">
+                            <a ng-href="{{result.url}}" class="color-primary" title="Go to project page" target="_blank">
+                                <h4>{{result.title}}</h4>
+                            </a>
+                        </div>
+                        <div class="panel-body">
+                            <div class="general-description clearfix">
+                                <div class="col-sm-6">
+                                    <img ng-src="{{result.owner.avatarUrl}}" />
+                                    <a ng-href="{{result.owner.profileUrl}}" title="Go to profile" target="_blank">
+                                        <span my-truncate="{{result.owner.name}}"></span>
+                                    </a>
+                                </div>
+                                <div class="col-sm-6 text-left">
+                                    <div ng-show="result.createdAt">
+                                        <span>Created:</span>
+                                        <i>{{result.createdAt | date}}</i><br/>
+                                    </div>
+                                    <div ng-show="result.watchers">
+                                        <span>Watchers:</span>
+                                        <b>{{result.watchers}}</b><br/>
+                                    </div>
+                                    <span>Score:</span>
+                                    <label class="label label-success">{{result.score | number:2}}</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <p>{{result.description}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="pagination" class="text-center"></div>
+        </div>
+    </div>
+
+    <section>
+        <script src="static/app.min.js"></script>
+        <!--<script src="static/githubApp/app.js"></script>-->
+
+        <!-- Constants -->
+        <!--<script src="static/githubApp/constants/Config.js"></script>-->
+
+        <!-- Services -->
+        <!--<script src="static/githubApp/service/UtilsService.js"></script>-->
+
+        <!-- Filters -->
+        <!--<script src="static/githubApp/filter/Offset.js"></script>-->
+
+        <!-- Directives -->
+        <!--<script src="static/githubApp/directive/Trim.js"></script>-->
+        <!--<script src="static/githubApp/directive/Enter.js"></script>-->
+
+        <!-- Models -->
+        <!--<script src="static/githubApp/model/Github.js"></script>-->
+
+        <!--Controllers -->
+        <!--<script src="static/githubApp/controller/MainCtrl.js"></script>-->
+
+    </section>
+</body>
+</html>
