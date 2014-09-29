@@ -2,7 +2,7 @@
 
 angular.module('MainCtrl', []).controller('MainCtrl', ['$scope','$compile' ,'Config','Github','Utils' ,
 function($scope, $compile, Config, Github, Utils){
-
+    var ctrl = this;
     // initialize values
     $scope.searchTerm = Config.searchTerm;
     $scope.categories = Config.searchCategories;
@@ -11,9 +11,7 @@ function($scope, $compile, Config, Github, Utils){
     // create new github object
     var GithubApi = new Github();
 
-    getResults();
-
-    function getResults(){
+    this.getResults = function(){
         // make a call to github
         var searchRepos = GithubApi.searchAngularRepos($scope.searchTerm, $scope.searchCategory);
 
@@ -25,18 +23,17 @@ function($scope, $compile, Config, Github, Utils){
                 $scope.results = $scope.searchCategory == 'repositories' ?
                     Utils.extractInfoRepo(data.items) : Utils.extractInfoUser(data.items);
                 // paginate results
-                paginate();
+                ctrl.paginate();
             }
         });
-    }
-
+    };
 
     $scope.doSearch = function(){
         getResults();
     };
 
     // configure pagination
-    function paginate(){
+    this.paginate = function(){
         $scope.pconfig ={
             currentPage: 0,
             list: $scope.results,
@@ -45,5 +42,7 @@ function($scope, $compile, Config, Github, Utils){
         };
         Utils.paginate($scope.pconfig);
         $compile($scope.pconfig.$editLine)($scope);
-    }
+    };
+
+    this.getResults();
 }]);
